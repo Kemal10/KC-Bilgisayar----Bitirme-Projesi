@@ -1,0 +1,21 @@
+﻿@model KCBilgisayar.Models.Entity.Kategori_Tbl
+@{
+    ViewBag.Title = "KategoriGetir";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+@using (Html.BeginForm("Guncelle", "Kategori", FormMethod.Post))
+{
+<div style="margin-top:15px" class="form-group">
+    @Html.LabelFor(m => m.Kategori_Id)
+    @Html.TextBoxFor(m => m.Kategori_Id, new { @class = "form-control" })
+
+    @Html.LabelFor(m => m.Kategori_Ad)
+    @Html.TextBoxFor(m => m.Kategori_Ad, new { @class = "form-control" })
+
+</div>
+    <div>
+        <button class="btn btn-warning">Kategori Güncelle</button>
+    </div>
+}
+

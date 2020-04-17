@@ -1,0 +1,32 @@
+﻿@using KCBilgisayar.Models.Entity
+@model List<Musteriler_Tbl>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<table class="table table-bordered ">
+    <tr>
+        <th>Musteri ID</th>
+        <th>Musteri Ad</th>
+        <th>Musteri Soyad</th>
+
+    </tr>
+
+    <tbody>
+        @foreach (var mstr in Model)
+        {
+            <tr>
+                <td>@mstr.Musteri_Id </td>
+                <td>@mstr.Musteri_Ad</td>
+                <td>@mstr.Musteri_Soyad</td>
+
+                <td> <a href="/Musteri/MusteriSil/@mstr.Musteri_Id " class="btn btn-danger">Sil</a>  </td>
+                <td> <a href="/Musteri/MusteriGetir/@mstr.Musteri_Id" class="btn btn-success">Güncelle</a>  </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+<a href="/Musteri/YeniMusteri/" class="btn btn-primary">Yeni Müşteri Ekle </a>

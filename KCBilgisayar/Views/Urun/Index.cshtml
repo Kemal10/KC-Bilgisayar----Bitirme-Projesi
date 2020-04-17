@@ -1,0 +1,36 @@
+﻿@using KCBilgisayar.Models.Entity
+@model List<Urunler_Tbl>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+<table class="table table-bordered ">
+    <tr>
+        <th>Urun ID</th>
+        <th>Urun Ad</th>
+        <th>Urun Kategori</th>
+        <th>Urun Fiyat</th>
+    </tr>
+
+    <tbody>
+        @foreach (var urn in Model)
+        {
+            <tr>
+                <td>@urn.UrunID </td>
+                <td>@urn.UrunAd</td>
+                <td>@urn.Kategori_Tbl.Kategori_Ad</td>
+                <td>@urn.Fiyat</td>
+                <td> <a href="/Urun/UrunSil/@urn.UrunID" class="btn btn-danger">Sil</a>  </td>
+                <td> <a href="/Urun/UrunGetir/@urn.UrunID" class="btn btn-success">Güncelle</a>  </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="/Urun/UrunEkle/" class="btn btn-primary">Yeni Urun Ekle </a>
+
+
+
+

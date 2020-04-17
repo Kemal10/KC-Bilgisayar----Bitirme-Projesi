@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Computer_HardwareModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Kategori_Tbl">
+    <Key>
+      <PropertyRef Name="Kategori_Id" />
+    </Key>
+    <Property Name="Kategori_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Kategori_Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Urunler_Tbl" Relationship="Self.FK_Urunler_Tbl_Kategori_Tbl" FromRole="Kategori_Tbl" ToRole="Urunler_Tbl" />
+  </EntityType>
+  <EntityType Name="Musteriler_Tbl">
+    <Key>
+      <PropertyRef Name="Musteri_Id" />
+    </Key>
+    <Property Name="Musteri_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Musteri_Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Musteri_Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Satıs_Tbl" Relationship="Self.FK_Satıs_Tbl_Musteriler_Tbl" FromRole="Musteriler_Tbl" ToRole="Satıs_Tbl" />
+  </EntityType>
+  <EntityType Name="Satıs_Tbl">
+    <Key>
+      <PropertyRef Name="Satis_ID" />
+    </Key>
+    <Property Name="Satis_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Urun" Type="Int32" />
+    <Property Name="Musteri" Type="Int32" />
+    <Property Name="Adet" Type="Byte" />
+    <Property Name="Fiyat" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="Musteriler_Tbl" Relationship="Self.FK_Satıs_Tbl_Musteriler_Tbl" FromRole="Satıs_Tbl" ToRole="Musteriler_Tbl" />
+    <NavigationProperty Name="Urunler_Tbl" Relationship="Self.FK_Satıs_Tbl_Urunler_Tbl" FromRole="Satıs_Tbl" ToRole="Urunler_Tbl" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Urunler_Tbl">
+    <Key>
+      <PropertyRef Name="UrunID" />
+    </Key>
+    <Property Name="UrunID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UrunAd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UrunKategori" Type="Int32" />
+    <Property Name="Fiyat" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="Kategori_Tbl" Relationship="Self.FK_Urunler_Tbl_Kategori_Tbl" FromRole="Urunler_Tbl" ToRole="Kategori_Tbl" />
+    <NavigationProperty Name="Satıs_Tbl" Relationship="Self.FK_Satıs_Tbl_Urunler_Tbl" FromRole="Urunler_Tbl" ToRole="Satıs_Tbl" />
+  </EntityType>
+  <Association Name="FK_Urunler_Tbl_Kategori_Tbl">
+    <End Role="Kategori_Tbl" Type="Self.Kategori_Tbl" Multiplicity="0..1" />
+    <End Role="Urunler_Tbl" Type="Self.Urunler_Tbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategori_Tbl">
+        <PropertyRef Name="Kategori_Id" />
+      </Principal>
+      <Dependent Role="Urunler_Tbl">
+        <PropertyRef Name="UrunKategori" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Satıs_Tbl_Musteriler_Tbl">
+    <End Role="Musteriler_Tbl" Type="Self.Musteriler_Tbl" Multiplicity="0..1" />
+    <End Role="Satıs_Tbl" Type="Self.Satıs_Tbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Musteriler_Tbl">
+        <PropertyRef Name="Musteri_Id" />
+      </Principal>
+      <Dependent Role="Satıs_Tbl">
+        <PropertyRef Name="Musteri" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Satıs_Tbl_Urunler_Tbl">
+    <End Role="Urunler_Tbl" Type="Self.Urunler_Tbl" Multiplicity="0..1" />
+    <End Role="Satıs_Tbl" Type="Self.Satıs_Tbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urunler_Tbl">
+        <PropertyRef Name="UrunID" />
+      </Principal>
+      <Dependent Role="Satıs_Tbl">
+        <PropertyRef Name="Urun" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Computer_HardwareEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Kategori_Tbl" EntityType="Self.Kategori_Tbl" />
+    <EntitySet Name="Musteriler_Tbl" EntityType="Self.Musteriler_Tbl" />
+    <EntitySet Name="Satıs_Tbl" EntityType="Self.Satıs_Tbl" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Urunler_Tbl" EntityType="Self.Urunler_Tbl" />
+    <AssociationSet Name="FK_Urunler_Tbl_Kategori_Tbl" Association="Self.FK_Urunler_Tbl_Kategori_Tbl">
+      <End Role="Kategori_Tbl" EntitySet="Kategori_Tbl" />
+      <End Role="Urunler_Tbl" EntitySet="Urunler_Tbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Satıs_Tbl_Musteriler_Tbl" Association="Self.FK_Satıs_Tbl_Musteriler_Tbl">
+      <End Role="Musteriler_Tbl" EntitySet="Musteriler_Tbl" />
+      <End Role="Satıs_Tbl" EntitySet="Satıs_Tbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Satıs_Tbl_Urunler_Tbl" Association="Self.FK_Satıs_Tbl_Urunler_Tbl">
+      <End Role="Urunler_Tbl" EntitySet="Urunler_Tbl" />
+      <End Role="Satıs_Tbl" EntitySet="Satıs_Tbl" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
